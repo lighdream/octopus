@@ -2,6 +2,7 @@ package com.htxk;
 
 import com.htxk.ruoyi.common.utils.DateUtils;
 import com.htxk.ruoyi.common.utils.StringUtils;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -10,9 +11,7 @@ public class Test {
 
     @org.junit.Test
     public void geiDate(){
-       /* String kkfk = DateUtils.parseDateToStr("yyyyMMddmmss",DateUtils.getNowDate());*/
-        String dsff = "15682374764";
-        System.out.println(dsff);
-        System.out.println(StringUtils.substring(dsff,5));
+        String s = new Md5Hash("202001103515" + "1234" + "254643").toHex().toString();
+        System.out.println(s);
     }
 }

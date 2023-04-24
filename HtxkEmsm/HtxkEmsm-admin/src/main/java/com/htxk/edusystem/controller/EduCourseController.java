@@ -2,6 +2,7 @@ package com.htxk.edusystem.controller;
 
 import com.htxk.edusystem.domain.EduCourse;
 import com.htxk.edusystem.service.IEduCourseService;
+import com.htxk.edusystem.service.IEduStudentCourseService;
 import com.htxk.ruoyi.common.annotation.Log;
 import com.htxk.ruoyi.common.core.controller.BaseController;
 import com.htxk.ruoyi.common.core.domain.AjaxResult;
@@ -32,6 +33,9 @@ public class EduCourseController extends BaseController {
     @Autowired
     private IEduCourseService eduCourseService;
 
+    @Autowired
+    private IEduStudentCourseService studentCourseService;
+
     @RequiresPermissions("edusystem:course:view")
     @GetMapping()
     public String course() {
@@ -46,7 +50,7 @@ public class EduCourseController extends BaseController {
     @ResponseBody
     public TableDataInfo list(EduCourse eduCourse) {
         startPage();
-        List<EduCourse> list = eduCourseService.selectEduCourseList(eduCourse);
+        List<EduCourse> list = eduCourseService.selectEduCourseList(null,eduCourse);
         return getDataTable(list);
     }
 
@@ -55,10 +59,10 @@ public class EduCourseController extends BaseController {
      */
     @RequiresPermissions("edusystem:course:export")
     @Log(title = "课程", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
+    @RequestMapping("/export")
     @ResponseBody
     public AjaxResult export(EduCourse eduCourse) {
-        List<EduCourse> list = eduCourseService.selectEduCourseList(eduCourse);
+        List<EduCourse> list = eduCourseService.selectEduCourseList(ShiroUtils.getUserId(),eduCourse);
         ExcelUtil<EduCourse> util = new ExcelUtil<EduCourse>(EduCourse.class);
         return util.exportExcel(list, "course");
     }
@@ -117,4 +121,51 @@ public class EduCourseController extends BaseController {
     public AjaxResult remove(String ids) {
         return toAjax(eduCourseService.deleteEduCourseByIds(ids));
     }
+
+
+    /**
+     * 选课
+     */
+    @RequiresPermissions("edusystem:course:select")
+    @Log(title = "选课", businessType = BusinessType.OTHER)
+    @PostMapping("/select")
+    @ResponseBody
+    public AjaxResult select(@RequestParam("id") Long id) {
+        Long userId = ShiroUtils.getUserId();
+        studentCourseService.select(userId,id);
+        return AjaxResult.success();
+    }
+
+    @GetMapping("/mycourses")
+//    @RequiresPermissions("edusystem:course:viewcourse")
+    public String getMyCourses() {
+        return prefix + "/mycourse.html";
+    }
+
+    /**
+     * 我的课表
+     */
+//    @RequiresPermissions("edusystem:course:mycourse")
+    @Log(title = "选课", businessType = BusinessType.OTHER)
+    @RequestMapping("/mycourse")
+    @ResponseBody
+    public TableDataInfo myCourses(EduCourse eduCourse) {
+        Long userId = ShiroUtils.getUserId();
+        startPage();
+        List<EduCourse> list = eduCourseService.selectEduCourseList(userId,eduCourse);
+        return getDataTable(list);
+    }
+
+    @Log(title = "退课", businessType = BusinessType.OTHER)
+    @RequestMapping("/drop")
+    @ResponseBody
+    public AjaxResult dropCourses(EduCourse eduCourse) {
+        Long userId = ShiroUtils.getUserId();
+        eduCourseService.dropCourseList(userId,eduCourse);
+        return AjaxResult.success();
+    }
+
+
+
+
 }

@@ -54,8 +54,14 @@
                shiro:hasPermission="edusystem:course:remove">
                 <i class="fa fa-remove"></i> 删除
             </a>
-            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="edusystem:course:export">
+            <a class="btn btn-warning" onclick="$.table.exportExcel()"
+               shiro:hasPermission="edusystem:course:export">
                 <i class="fa fa-download"></i> 导出
+            </a>
+
+            <a class="btn btn-primary single disabled" onclick="select()"
+               shiro:hasPermission="edusystem:course:select">
+                <i class="fa fa-plus"></i> 选课
             </a>
         </div>
         <div class="col-sm-12 select-table table-striped">
@@ -122,6 +128,10 @@
         };
         $.table.init(options);
     });
+
+    function select() {
+        $.operate.post(prefix + "/select?id=" + $.table.selectColumns("courseId"));
+    }
 </script>
 </body>
 </html>

@@ -1,13 +1,18 @@
 package com.htxk.edusystem.service.impl;
 
 import com.htxk.edusystem.domain.EduCourse;
+import com.htxk.edusystem.domain.EduStudent;
+import com.htxk.edusystem.domain.EduStudentCourse;
 import com.htxk.edusystem.mapper.EduCourseMapper;
+import com.htxk.edusystem.mapper.EduStudentCourseMapper;
+import com.htxk.edusystem.mapper.EduStudentMapper;
 import com.htxk.edusystem.service.IEduCourseService;
 import com.htxk.ruoyi.common.core.text.Convert;
 import com.htxk.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +25,12 @@ import java.util.List;
 public class EduCourseServiceImpl implements IEduCourseService {
     @Autowired
     private EduCourseMapper eduCourseMapper;
+
+    @Autowired
+    private EduStudentMapper eduStudentMapper;
+
+    @Autowired
+    private EduStudentCourseMapper eduStudentCourseMapper;
 
     /**
      * 查询课程
@@ -39,10 +50,27 @@ public class EduCourseServiceImpl implements IEduCourseService {
      * @return 课程
      */
     @Override
-    public List<EduCourse> selectEduCourseList(EduCourse eduCourse) {
+    public List<EduCourse> selectEduCourseList(Long userId,EduCourse eduCourse) {
+        if (userId!=null){
+            EduStudent eduStudent = eduStudentMapper.selectEduStudentByUserId(userId);
+            if (eduStudent!=null && eduStudent.getStudentId()!=null){
+                ArrayList<EduCourse> eduCourseArrayList = new ArrayList<>();
+                List<EduStudentCourse> studentCourses = eduStudentCourseMapper.
+                        selectCourseListByStudentId(eduStudent.getStudentId());
+                for (EduStudentCourse studentCourse : studentCourses) {
+                    Long courseId = studentCourse.getCourseId();
+                    eduCourseArrayList.add(eduCourseMapper.selectEduCourseById(courseId));
+                }
+                return eduCourseArrayList;
+            }
+        }
         return eduCourseMapper.selectEduCourseList(eduCourse);
     }
 
+    @Override
+    public List<EduCourse> selectEduCourseList(EduCourse eduCourse) {
+        return eduCourseMapper.selectEduCourseList(eduCourse);
+    }
     /**
      * 新增课程
      *
@@ -87,4 +115,12 @@ public class EduCourseServiceImpl implements IEduCourseService {
     public int deleteEduCourseById(Long courseId) {
         return eduCourseMapper.deleteEduCourseById(courseId);
     }
+
+
+    @Override
+    public void dropCourseList(Long userId, EduCourse eduCourse) {
+        EduStudent eduStudent = eduStudentMapper.selectEduStudentByUserId(userId);
+        eduStudentCourseMapper.dropCourseList(eduStudent.getStudentId(),eduCourse.getCourseId());
+    }
+
 }

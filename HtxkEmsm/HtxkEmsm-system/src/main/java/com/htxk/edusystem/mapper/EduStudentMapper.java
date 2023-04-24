@@ -58,4 +58,6 @@ public interface EduStudentMapper {
      * @return 结果
      */
     public int deleteEduStudentByIds(String[] studentIds);
+
+    public EduStudent selectEduStudentByUserId(Long userId);
 }

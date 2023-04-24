@@ -113,4 +113,7 @@
         </foreach>
     </delete>
 
+    <select id="selectEduStudentByUserId" resultMap="EduStudentResult">
+        select * from edu_student where sys_user_id = #{userId}
+    </select>
 </mapper>

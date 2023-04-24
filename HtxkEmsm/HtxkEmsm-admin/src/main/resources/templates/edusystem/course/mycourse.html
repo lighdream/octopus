@@ -25,10 +25,10 @@
                         <li>
                             <p>课程类型：</p>
                             <select id="courseTypeid" name="courseTypeid" class="form-control m-b" required
-                                              th:with="type=${@CourseType.selectEduCourseTypeList(null)}">
-                            <option value="">所有</option>
-                            <option th:each="CourseType : ${type}" th:text="${CourseType.getCourseTypeName()}"
-                                    th:value="${CourseType.getCourseTypeId()}"></option>
+                                    th:with="type=${@CourseType.selectEduCourseTypeList(null)}">
+                                <option value="">所有</option>
+                                <option th:each="CourseType : ${type}" th:text="${CourseType.getCourseTypeName()}"
+                                        th:value="${CourseType.getCourseTypeId()}"></option>
                             </select>
                         </li>
                         <li>
@@ -61,7 +61,7 @@
 
             <a class="btn btn-primary single disabled" onclick="select()"
                shiro:hasPermission="edusystem:course:select">
-                <i class="fa fa-plus"></i> 选课
+                <i class="fa fa-plus"></i> 退课
             </a>
         </div>
         <div class="col-sm-12 select-table table-striped">
@@ -77,7 +77,7 @@
 
     $(function () {
         var options = {
-            url: prefix + "/list",
+            url: prefix + "/mycourse",
             createUrl: prefix + "/add",
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
@@ -129,8 +129,10 @@
         $.table.init(options);
     });
 
+
+    //todo 退课
     function select() {
-        $.operate.post(prefix + "/select?id=" + $.table.selectColumns("courseId"));
+        $.operate.post(prefix + "/drop?id=" + $.table.selectColumns("courseId"));
     }
 </script>
 </body>

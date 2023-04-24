@@ -25,6 +25,8 @@ public interface IEduCourseService {
      * @param eduCourse 课程
      * @return 课程集合
      */
+    public List<EduCourse> selectEduCourseList(Long userId,EduCourse eduCourse);
+
     public List<EduCourse> selectEduCourseList(EduCourse eduCourse);
 
     /**
@@ -58,4 +60,6 @@ public interface IEduCourseService {
      * @return 结果
      */
     public int deleteEduCourseById(Long courseId);
+
+    void dropCourseList(Long userId, EduCourse eduCourse);
 }
