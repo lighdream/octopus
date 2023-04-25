@@ -9,7 +9,7 @@ ruoyi:
   # 实例演示开关
   demoEnabled: false
   # 文件路径 示例（ Windows配置D:/HtxkEmsm/uploadPath，Linux配置 /home/HtxkEmsm/uploadPath）
-  profile: C:/Users/13056/Desktop/bishe/octopus/HtxkEmsm/uploadpath
+  profile: F:/JavaProjects/octopus/HtxkEmsm/meterial
   # 获取ip地址开关
   addressEnabled: true
 

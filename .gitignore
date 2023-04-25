@@ -11,6 +11,7 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 *.test/
+.idea/
 
 # Package Files #
 *.jar
@@ -26,5 +27,5 @@
 hs_err_pid*
 replay_pid*
 
-application.yml
-application-druid.yml
+*.yml
+*.yaml
