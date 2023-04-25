@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/HtxkEmsm" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/HtxkEmsm/HtxkEmsm-admin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/HtxkEmsm/HtxkEmsm-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/HtxkEmsm/HtxkEmsm-framework" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/HtxkEmsm/HtxkEmsm-generator" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/HtxkEmsm/HtxkEmsm-quartz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/HtxkEmsm/HtxkEmsm-system" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
